@@ -1,8 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { TodoList } from '../redux/TodoReducer'; 
+import { Todos } from '../redux/LoadTodoReducer';
+import thunk from 'redux-thunk'; 
+import logger from 'redux-logger';
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
+// var defaultState = {
+//   todo: {
+//     items: []
+//   }
+// };
+
+export const ConfigureStore = () => {
+    const store = createStore(
+        combineReducers({
+          todo: Todos, 
+          todoList: TodoList
+        }),
+        applyMiddleware(thunk, logger)
+    )
+    return store;
+}
+
+
