@@ -1,4 +1,4 @@
-export const todo = {items: [
+export const todo = [
     {
         id: 0, 
         message: "Learn React", 
@@ -15,4 +15,4 @@ export const todo = {items: [
         completed: false
     },
 ]
-}
+

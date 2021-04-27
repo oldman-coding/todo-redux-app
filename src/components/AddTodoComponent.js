@@ -33,7 +33,8 @@ class AddTodo extends Component {
         event.preventDefault();
         var message = this.state.message;
         if (message) {
-            this.props.addTodo(message)
+            this.props.addTodo({message: message, 
+                completed: false})
         }
         this.setState({
             message: ''
@@ -43,7 +44,6 @@ class AddTodo extends Component {
     clearAllButton(event) {
         event.preventDefault();
         this.props.clearTodo();
-        console.log("store: ", store.getState().todo.items);
     }
     
 

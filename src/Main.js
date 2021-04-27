@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import Header from './components/HeaderComponent'; 
 import AddTodo from './components/AddTodoComponent'; 
 import TodoItems from './components/TodoItemComponent'; 
-import Loading from './components/LoadingComponent';
+import { Loading } from './components/LoadingComponent';
 import { deleteTodo, completeTodo, addTodo, clearTodo, fetchTodo } from './redux/ActionCreators';
 
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-      items: state.todo.items
+      items: state.todo,
+      isLoading: state.isLoading, 
+      errMess: state.errMess
     }
 }
 
@@ -18,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
     clearTodo: () => dispatch(clearTodo()), 
     completeTodo: (index) => dispatch(completeTodo(index)), 
     deleteTodo: (index) => dispatch(deleteTodo(index)), 
-    fetchTodo: () => {dispatch(fetchTodo)}
+    fetchTodo: () => {dispatch(fetchTodo())}
 });
 
 
@@ -27,16 +29,36 @@ class Main extends Component {
       super(props);
       
   }
-  componentDidMount() {
-    this.props.fetchTodo; 
-  }
 
+  componentDidMount() {
+    this.props.fetchTodo(); 
+
+  }
+  
   render() {
-    return (
+    
+    if (this.props.isLoading) {
+      return (
+        <div className='container'>
+            <div className='row'>
+              <Loading />
+            </div>
+        </div>
+      )
+    }
+    else if (this.props.errMess) {
+      return (
+        <div className='container'>
+            <div className='row'>
+              <h4>{this.props.errMess}</h4>
+            </div>
+        </div>
+      )
+    }
+    else 
+      return (
       <div className="App">
           {/* <Loading /> */}
-          
-
           <Header />
           <AddTodo addTodo={this.props.addTodo}
                   clearTodo ={this.props.clearTodo}
@@ -46,7 +68,6 @@ class Main extends Component {
             completeTodo={this.props.completeTodo}
             deleteTodo={this.props.deleteTodo}
             />
-
       </div>
     );
   }

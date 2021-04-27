@@ -27,9 +27,12 @@ export const clearTodo = () => (
 
 export const fetchTodo = () => (dispatch) => {
     dispatch(todoLoading(true));
+    
     setTimeout(() => {
         dispatch(addTodo(todo));
+        
     },2000);
+    console.log('Our data is fetched')
 }
 
 export const todoLoading = () => ({

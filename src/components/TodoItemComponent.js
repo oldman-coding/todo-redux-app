@@ -1,11 +1,4 @@
 import React, { Component } from 'react'; 
-import {ConfigureStore} from '../app/store';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
-    Button, Modal, ModalHeader, ModalBody,
-    Form, FormGroup, Input, Label } from 'reactstrap';
-import ActionType from '../redux/ActionType';
-
-
 
 class TodoItems extends Component {
     constructor(props) {

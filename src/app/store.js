@@ -12,10 +12,7 @@ import logger from 'redux-logger';
 
 export const ConfigureStore = () => {
     const store = createStore(
-        combineReducers({
-          todo: Todos, 
-          todoList: TodoList
-        }),
+        Todos,
         applyMiddleware(thunk, logger)
     )
     return store;
