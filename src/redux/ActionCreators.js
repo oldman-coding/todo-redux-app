@@ -1,5 +1,6 @@
 import ActionType from './ActionType'; 
-import { todo } from '../shared/todoItem'; 
+// import { todo } from '../shared/todoItem'; 
+import { baseUrl } from '../shared/baseUrl';
 
 export const completeTodo = (index) => (
     {
@@ -28,11 +29,22 @@ export const clearTodo = () => (
 export const fetchTodo = () => (dispatch) => {
     dispatch(todoLoading(true));
     
-    setTimeout(() => {
-        dispatch(addTodo(todo));
-        
-    },2000);
-    console.log('Our data is fetched')
+    return fetch(baseUrl + 'todo')
+        .then(response => {
+            if (response.ok) 
+                return response
+            else {
+                var error = new Error('Error ' + response.status + ": " + response.statusText ); 
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            var errmess = new Error(error.message); 
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(todo => dispatch(addTodo(todo)) )
+        .catch(error => dispatch(todoFailed(error.message)))
 }
 
 export const todoLoading = () => ({
