@@ -3,7 +3,7 @@ import Header from './components/HeaderComponent';
 import AddTodo from './components/AddTodoComponent'; 
 import TodoItems from './components/TodoItemComponent'; 
 import { Loading } from './components/LoadingComponent';
-import { deleteTodo, completeTodo, addTodo, clearTodo, fetchTodo } from './redux/ActionCreators';
+import { deleteTodo, completeTodo, clearTodo, fetchTodo, postTodo } from './redux/ActionCreators';
 
 import { connect } from 'react-redux';
 
@@ -16,7 +16,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addTodo: (message) => dispatch(addTodo(message)), 
+    postTodo: (message) => dispatch(postTodo(message)), 
     clearTodo: () => dispatch(clearTodo()), 
     completeTodo: (index) => dispatch(completeTodo(index)), 
     deleteTodo: (index) => dispatch(deleteTodo(index)), 
@@ -60,7 +60,7 @@ class Main extends Component {
       <div className="App">
           {/* <Loading /> */}
           <Header />
-          <AddTodo addTodo={this.props.addTodo}
+          <AddTodo postTodo={this.props.postTodo}
                   clearTodo ={this.props.clearTodo}
           />
           <TodoItems 

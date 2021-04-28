@@ -33,8 +33,7 @@ class AddTodo extends Component {
         event.preventDefault();
         var message = this.state.message;
         if (message) {
-            this.props.addTodo({message: message, 
-                completed: false})
+            this.props.postTodo(message)
         }
         this.setState({
             message: ''
