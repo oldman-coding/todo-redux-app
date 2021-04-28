@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import Header from './components/HeaderComponent'; 
+import Footer from './components/FooterComponent';
 import AddTodo from './components/AddTodoComponent'; 
 import TodoItems from './components/TodoItemComponent'; 
+import TodoItem from './components/TodoItem';
 import { Loading } from './components/LoadingComponent';
+import TodoDetail from './components/TodoDetailComponent';
 import { deleteTodo, completeTodo, clearTodo, fetchTodo, postTodo } from './redux/ActionCreators';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -36,6 +40,28 @@ class Main extends Component {
   }
   
   render() {
+  //   const TodoDetailPage = () => {
+  //     return (
+  //         <TodoDetail items={this.props.items} />
+  //     )
+  // };
+    const TodoDetailItemPage = ({match}) => {
+      return(
+          <TodoItem item={this.props.items.filter((item) => item.id === parseInt(match.params.TodoId,10))[0]} 
+              
+            />
+      );
+    };
+
+    const TodoItemListPage = () => {
+      return (
+        <TodoItems 
+        items={this.props.items} 
+        completeTodo={this.props.completeTodo}
+        deleteTodo={this.props.deleteTodo}
+        />
+      )
+    };
     
     if (this.props.isLoading) {
       return (
@@ -58,16 +84,21 @@ class Main extends Component {
     else 
       return (
       <div className="App">
-          {/* <Loading /> */}
           <Header />
           <AddTodo postTodo={this.props.postTodo}
                   clearTodo ={this.props.clearTodo}
           />
-          <TodoItems 
+          
+          {/* <TodoItems 
             items={this.props.items} 
             completeTodo={this.props.completeTodo}
             deleteTodo={this.props.deleteTodo}
-            />
+            /> */}
+          <Switch>
+            <Route exact path ='/todo' component = {TodoItemListPage} />
+            <Route path='/todo/:TodoId' component = {TodoDetailItemPage} />
+          </Switch>
+          <Footer />
       </div>
     );
   }
